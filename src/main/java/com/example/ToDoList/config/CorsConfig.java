@@ -1,4 +1,3 @@
-// src/main/java/com/example/ToDoList/config/CorsConfig.java
 package com.example.ToDoList.config;
 
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*")
+                        .allowedOrigins(
+                                "http://localhost:3000",
+                                "https://todolist-frontend-6w2y.vercel.app"
+                        )
                         .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
@@ -22,3 +24,4 @@ public class CorsConfig {
         };
     }
 }
+
