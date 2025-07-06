@@ -1,22 +1,21 @@
 # Use official Maven image to build the application
 FROM maven:3.9.5-eclipse-temurin-17 AS build
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Maven project files
-COPY pom.xml .
-COPY .mvn .mvn
+# Copy Maven wrapper and give execute permission
 COPY mvnw mvnw
+COPY .mvn .mvn
+COPY pom.xml .
 
-# Pre-download dependencies
-RUN ./mvnw dependency:go-offline
+RUN chmod +x mvnw && ./mvnw dependency:go-offline
 
-# Copy the rest of the source code
+# Copy the rest of the code
 COPY src src
 
-# Package the application
+# Package app
 RUN ./mvnw clean package -DskipTests
+
 
 # ---- Final image ----
 FROM eclipse-temurin:17-jdk-alpine
